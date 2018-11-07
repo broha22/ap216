@@ -1,8 +1,12 @@
+%clear all com ports
 instrreset
 delete(instrfindall)
+
+%create serial object
 s = serial('COM4', 'Baudrate', 2000000);
 s.Terminator = 'LF';
 
+%open communication with serial object
 fopen(s);
 pause(3);
 
