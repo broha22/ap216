@@ -8,6 +8,8 @@ s.Terminator = 'LF';
 
 %open communication with serial object
 fopen(s);
+%opening communication with the arduino resets its
+%USB driver. Must wait for that to reboot
 pause(3);
 
 data = 1:1:100;
