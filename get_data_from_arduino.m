@@ -4,10 +4,12 @@ delete(instrfindall)
 
 %create serial object
 s = serial('COM4', 'Baudrate', 2000000);
+%set end of string terminator to '\n'
 s.Terminator = 'LF';
 
 %open communication with serial object
 fopen(s);
+
 %opening communication with the arduino resets its
 %USB driver. Must wait for that to reboot
 pause(3);
@@ -33,9 +35,12 @@ delete(s);
 clear s;
 
 function data = get_data(s);
-    %ask Arduino for data
+    
+    %clear com port
     flushinput(s);
     flushoutput(s);
+    
+    %ask Arduino for data
     fprintf(s,'send_data');
     
     %read data from Arduino
