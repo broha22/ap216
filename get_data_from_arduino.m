@@ -2,8 +2,17 @@
 instrreset
 delete(instrfindall)
 
-%create serial object
-s = serial('COM4', 'Baudrate', 2000000);
+%list serial ports to user
+disp('Ports available: ') 
+disp(seriallist)
+
+%prompt them to choose a port to use
+prompt = '\nChoose a serial port to use: ';
+com_port = input(prompt, 's');
+
+%create a serial object
+s = serial(com_port, 'Baudrate', 2000000);
+
 %set end of string terminator to '\n'
 s.Terminator = 'LF';
 
