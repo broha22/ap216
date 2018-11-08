@@ -1,9 +1,26 @@
+%clear all com ports
 instrreset
 delete(instrfindall)
-s = serial('COM4', 'Baudrate', 9600);
+
+%list serial ports to user
+disp('Ports available: ') 
+disp(seriallist)
+
+%prompt them to choose a port to use
+prompt = '\nChoose a serial port to use: ';
+com_port = input(prompt, 's');
+
+%create a serial object
+s = serial(com_port, 'Baudrate', 2000000);
+
+%set end of string terminator to '\n'
 s.Terminator = 'LF';
 
+%open communication with serial object
 fopen(s);
+
+%opening communication with the arduino resets its
+%USB driver. Must wait for that to reboot
 pause(3);
 
 
@@ -26,11 +43,14 @@ fclose(s);
 delete(s);
 clear s;
 
-function data = get_data(s)
-    %ask Arduino for data
+function data = get_data(s);
+    
+    %clear com port
     flushinput(s);
     flushoutput(s);
-    fprintf(s,'1');
+    
+    %ask Arduino for data
+    fprintf(s,'send_data');
     
     %read data from Arduino
     data = fscanf(s);
