@@ -1,12 +1,12 @@
 instrreset
 delete(instrfindall)
-s = serial('COM4', 'Baudrate', 2000000);
+s = serial('COM4', 'Baudrate', 9600);
 s.Terminator = 'LF';
 
 fopen(s);
 pause(3);
 
-data = 1:1:100;
+
 t = 1:1:100;
 data = zeros(size(data));
 
@@ -26,11 +26,11 @@ fclose(s);
 delete(s);
 clear s;
 
-function data = get_data(s);
+function data = get_data(s)
     %ask Arduino for data
     flushinput(s);
     flushoutput(s);
-    fprintf(s,'send_data');
+    fprintf(s,'1');
     
     %read data from Arduino
     data = fscanf(s);
