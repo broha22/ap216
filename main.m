@@ -13,9 +13,17 @@ global avg_q
 avg_q = Queue;
 
 %set up arduino
+%list serial ports to user
+disp('Ports available: ') 
+disp(seriallist)
+
+%prompt them to choose a port to use
+prompt = '\nChoose a serial port to use: ';
+com_port = input(prompt, 's');
+
 global arduino
 arduino = ArduinoConnect;
-arduino = arduino.open('/dev/cu.usbserial-1410', 9600);
+arduino = arduino.open(com_port, 9600);
 
 %set up timer, 0.1s periodic call
 mainLoop = timer;
